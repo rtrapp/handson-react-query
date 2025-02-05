@@ -1,0 +1,9 @@
+{
+  "name": "handson-react-query",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/handson-react-query/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project handson-react-query --web",
+  "targets": {}
+}
