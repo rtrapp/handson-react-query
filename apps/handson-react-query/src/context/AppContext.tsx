@@ -2,15 +2,16 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 interface User {
   username: string;
+  token: string;
 }
 
 interface AppContextType {
   user: User | null;
-  login: (userData: User) => void;
+  updateUser: (userData: User) => void;
   logout: () => void;
 }
 
-const AppContext = createContext<AppContextType>({user: null, login: () => {}, logout: () => {}});
+const AppContext = createContext<AppContextType>({user: null, updateUser: () => {}, logout: () => {}});
 
 interface AppProviderProps {
   children: ReactNode;
@@ -19,16 +20,16 @@ interface AppProviderProps {
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = (userData: User) => {
+  const UpdateUser = (userData: User) => {
     setUser(userData);
   };
 
-  const logout = () => {
+  const Logout = () => {
     setUser(null);
   };
 
   return (
-    <AppContext.Provider value={{ user, login, logout }}>
+    <AppContext.Provider value={{ user, updateUser: UpdateUser, logout: Logout }}>
       {children}
     </AppContext.Provider>
   );
