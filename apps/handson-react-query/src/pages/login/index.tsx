@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Button, TextField } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,9 @@ interface LoginFormValues {
   username: string;
   password: string;
 }
+
+
+
 
 
 const Login = () => {
@@ -28,6 +31,24 @@ const Login = () => {
       password: '',
     }
 
+    const validate = (values: LoginFormValues) => {
+      const errors:LoginFormValues = {
+        username: '',
+        password: '',
+      };
+      
+      if (!values.username) {
+        errors.username = 'Required';
+      }
+
+      if (!values.username) {
+        errors.password = 'Required';
+      }
+    
+      return errors;
+    };
+
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white rounded shadow">
@@ -35,8 +56,9 @@ const Login = () => {
         <Formik
           initialValues={{ username: '', password: '' }}
           onSubmit={handleSubmit}
+          validate={validate}
         >
-          {({ handleChange }) => (
+          {({ handleChange, touched, errors }) => (
             <Form>
               <div className="mb-4">
                 <Field
@@ -44,6 +66,8 @@ const Login = () => {
                   name="username"
                   label="Username"
                   variant="outlined"
+                  error={Boolean(touched.username && errors.username)}
+                  helperText={<ErrorMessage name="username" />}
                   fullWidth
                   onChange={handleChange}
                 />
@@ -56,6 +80,8 @@ const Login = () => {
                   type="password"
                   variant="outlined"
                   fullWidth
+                  error={Boolean(touched.password && errors.password)}
+                  helperText={<ErrorMessage name="password" />}
                   onChange={handleChange}
                 />
               </div>
