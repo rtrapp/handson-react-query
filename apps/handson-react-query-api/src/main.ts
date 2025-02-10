@@ -6,6 +6,7 @@
 import express from 'express';
 import * as path from 'path';
 import cors from "cors";
+import { v4 as uuidv4 } from 'uuid';
 
 const app = express();
 
@@ -19,6 +20,15 @@ app.get('/api', (req, res) => {
 
 app.post('/api/login', (req, res) => {
   res.send({ authToken: 'FakeToken' });
+});
+
+
+app.get('/api/loop', (req, res) => {
+  res.send({ dateTime: new Date().toISOString() });
+});
+
+app.get('/api/guid', (req, res) => {
+  res.send({ guid: uuidv4() });
 });
 
 const port = process.env.PORT || 3333;
